@@ -1,0 +1,82 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:colorBackground">@color/place_autocomplete_search_text</item>
+        <item name="colorPrimary">@android:color/holo_blue_dark</item>
+        <item name="colorAccent">@android:color/holo_blue_light</item>
+    </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+
+    <style name="AppThemeFullScreenImage" parent="Theme.Design.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="FullScreen.TextAppearance.Title" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="FullScreen.TextAppearance.Title.Inverse" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+
+
+    <style name="AppTheme.NoActionBar2">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="patternViewStyle">@style/PatternView</item>
+
+    </style>
+
+
+
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="WhiteCheck">
+        <item name="colorAccent">#fff</item>
+    </style>
+
+    <style name="Base.PatternView" parent="">
+        <item name="pl_rowCount">3</item>
+        <item name="pl_columnCount">3</item>
+        <item name="pl_aspect">square</item>
+    </style>
+
+    <style name="PatternView" parent="Base.PatternView">
+        <item name="pl_regularColor">#FFFFFF</item>
+        <item name="pl_errorColor">#cf4419</item>
+        <item name="pl_successColor">#FFFFFF</item>
+    </style>
+
+    <style name="PatternView.Light" parent="Base.PatternView">
+        <item name="pl_regularColor">?colorControlNormal</item>
+        <item name="pl_errorColor">#fff4511e</item>
+        <item name="pl_successColor">?colorControlActivated</item>
+    </style>
+</resources>

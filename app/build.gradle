@@ -1,0 +1,148 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.app.altex.altexsafe"
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 7
+        versionName '1.0.1'
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+
+
+    compileOptions {
+        targetCompatibility 1.7
+        sourceCompatibility 1.7
+    }
+
+    packagingOptions {
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/notice'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    lintOptions {
+        disable 'MissingTranslation'
+    }
+
+    task ndkBuild(type: Exec) {
+        def rootDir = project.rootDir
+        def localProperties = new File(rootDir, "local.properties")
+        Properties properties = new Properties()
+        localProperties.withInputStream { instr ->
+            properties.load(instr)
+        }
+        def ndkDir = properties.getProperty('ndk.dir')
+
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            commandLine ndkDir + '\\ndk-build.cmd',
+                    'NDK_LIBS_OUT=main/jniLibs',
+                    'NDK_PROJECT_PATH=' + rootDir + '\\app\\src',
+                    'APP_BUILD_SCRIPT=jni/Android.mk',
+                    '-C',
+                    file('src').absolutePath
+        } else {
+            commandLine ndkDir + '/ndk-build',
+                    'NDK_LIBS_OUT=main/jniLibs',
+                    'NDK_PROJECT_PATH=' + rootDir + '/app/src',
+                    'APP_BUILD_SCRIPT=jni/Android.mk',
+                    '-C',
+                    file('src').absolutePath
+        }
+    }
+
+    productFlavors {
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    tasks.withType(JavaCompile) {
+        compileTask -> compileTask.dependsOn ndkBuild
+    }
+
+    sourceSets {
+        main {
+            res.srcDirs =
+                    [
+                            'src/main/res',
+                            'src/main/res/layouts/wallet',
+                            'src/main/res/layouts/main_app',
+                    ]
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support:support-vector-drawable:26.1.0'
+    implementation 'com.android.support:support-v4:26.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    compile 'com.github.rubensousa:raiflatbutton:0.1'
+    compile 'com.android.support:recyclerview-v7:24.0.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.lucasurbas:listitemview:1.0.5'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'hani.momanii.supernova_emoji_library:supernova-emoji-library:0.0.2'
+    compile 'me.himanshusoni.chatmessageview:chat-message-view:1.0.3'
+    compile 'com.firebaseui:firebase-ui-database:0.4.1'
+    compile 'com.daimajia.easing:library:2.0@aar'
+    compile 'com.daimajia.androidanimations:library:2.3@aar'
+    compile 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    compile 'com.libizo:customedittext:1.0.2'
+    compile 'com.thanosfisherman.mayi:mayi:1.4'
+    testCompile 'junit:junit:4.12'
+    compile 'com.rilixtech:materialfancybuttons:1.8.7'
+    implementation 'com.github.angads25:toggle:1.0.0'
+    compile 'com.github.gilgoldzweig:EasyTab:1.1.2'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    compile 'de.hdodenhof:circleimageview:2.2.0'
+    compile 'com.beardedhen:androidbootstrap:2.3.2'
+    compile 'com.squareup.okhttp3:okhttp:3.10.0'
+    compile 'com.github.amirdew:JSON:v1.0.0'
+    compile 'com.github.ganfra:material-spinner:2.0.0'
+    compile 'com.prof.rssparser:rssparser:1.4'
+    compile 'com.github.mmoamenn:ProgressWindow_Android:0.0.2'
+    compile 'org.sufficientlysecure:html-textview:3.5'
+    compile 'org.jsoup:jsoup:1.11.3'
+    compile 'com.adityak:browsemyfiles:1.7'
+    compile 'com.nbsp:library:1.8'
+    compile 'com.github.clans:fab:1.6.4'
+    compile 'me.dm7.barcodescanner:zxing:1.8.4'
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'org.web3j:core-android:2.2.1'
+    compile 'me.zhanghai.android.patternlock:library:2.1.2'
+    compile 'com.afollestad.material-dialogs:core:0.9.4.5'
+    compile 'io.github.kobakei:ratethisapp:1.2.0'
+    compile 'com.github.apl-devs:appintro:v4.1.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+    compile 'me.grantland:autofittextview:0.2.1'
+    compile 'com.github.deano2390:MaterialShowcaseView:1.2.0@aar'
+    compile('com.mikepenz:materialdrawer:5.9.1@aar') {
+        transitive = true
+    }
+}
+
+
+
