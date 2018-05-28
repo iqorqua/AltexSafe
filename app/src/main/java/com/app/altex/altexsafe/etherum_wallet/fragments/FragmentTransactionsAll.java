@@ -57,6 +57,7 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             if (isAdded()) {
+                                if (ac == null) return;
                                 ac.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -74,6 +75,7 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract {
                                 RequestCache.getInstance().put(RequestCache.TYPE_TXS_NORMAL, currentWallet.getPubKey(), restring);
                             final ArrayList<TransactionDisplay> w = new ArrayList<TransactionDisplay>(ResponseParser.parseTransactions(restring, "Unnamed Address", currentWallet.getPubKey(), TransactionDisplay.NORMAL));
                             if (isAdded()) {
+                                if (ac == null) return;
                                 ac.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -87,6 +89,7 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             if (isAdded()) {
+                                if (ac == null) return;
                                 ac.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -104,6 +107,7 @@ public class FragmentTransactionsAll extends FragmentTransactionsAbstract {
                                 RequestCache.getInstance().put(RequestCache.TYPE_TXS_INTERNAL, currentWallet.getPubKey(), restring);
                             final ArrayList<TransactionDisplay> w = new ArrayList<TransactionDisplay>(ResponseParser.parseTransactions(restring, "Unnamed Address", currentWallet.getPubKey(), TransactionDisplay.CONTRACT));
                             if (isAdded()) {
+                                if (ac == null) return;
                                 ac.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {

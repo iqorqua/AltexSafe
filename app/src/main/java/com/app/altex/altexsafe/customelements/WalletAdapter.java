@@ -24,8 +24,10 @@ public class WalletAdapter extends BaseAdapter {
     public WalletAdapter(Context context, ArrayList<WalletItem> items){
         objects = items;
         ctx = context;
-        lInflater = (LayoutInflater) ctx
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (ctx != null) {
+            lInflater = (LayoutInflater) ctx
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
     }
 
     @Override
@@ -46,10 +48,11 @@ public class WalletAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
-        if (view == null) {
+        if (view == null && lInflater != null) {
             view = lInflater.inflate(R.layout.item_wallet_btc, parent, false);
         }
 
+        if (view == null) return null;
         WalletItem wi = getWallettItem(position);
         ((TextView)view.findViewById(R.id.short_name_txt)).setText(wi.symbol);
         ((TextView)view.findViewById(R.id.long_name_txt)).setText(wi.name);

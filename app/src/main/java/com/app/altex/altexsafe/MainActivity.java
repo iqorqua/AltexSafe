@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            findViewById(R.id.mainLO).setBackground(getDrawable(R.drawable.bckg));
+            findViewById(R.id.mainLO).setBackground(getResources().getDrawable(R.drawable.bckg));
             Fragment fragment = null;
             switch (item.getItemId()) {
                 case R.id.navigation_wallets: {

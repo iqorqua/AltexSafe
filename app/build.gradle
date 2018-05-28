@@ -121,7 +121,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
     compile 'com.github.amirdew:JSON:v1.0.0'
     compile 'com.github.ganfra:material-spinner:2.0.0'
-    compile 'com.prof.rssparser:rssparser:1.4'
+    compile 'com.prof.rssparser:rssparser:1.4.1'
     compile 'com.github.mmoamenn:ProgressWindow_Android:0.0.2'
     compile 'org.sufficientlysecure:html-textview:3.5'
     compile 'org.jsoup:jsoup:1.11.3'

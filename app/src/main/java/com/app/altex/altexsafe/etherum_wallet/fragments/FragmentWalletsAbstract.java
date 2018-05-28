@@ -277,7 +277,7 @@ public abstract class FragmentWalletsAbstract extends Fragment implements View.O
                     final List<WalletDisplay> w = new ArrayList<WalletDisplay>();
                     for (StorableWallet cur : storedwallets)
                         w.add(new WalletDisplay(AddressNameConverter.getInstance(ac).get(cur.getPubKey()), cur.getPubKey(), new BigInteger("-1"), WalletDisplay.CONTACT));
-
+                    if (ac == null) return;
                     ac.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -297,7 +297,7 @@ public abstract class FragmentWalletsAbstract extends Fragment implements View.O
                         e.printStackTrace();
                         return;
                     }
-
+                    if (ac == null) return;
                     ac.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
