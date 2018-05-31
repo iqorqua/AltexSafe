@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import android.widget.ListAdapter;
 import com.app.altex.altexsafe.R;
 import com.app.altex.altexsafe.customelements.GridAdapter;
 import com.app.altex.altexsafe.customelements.ImageGridItem;
+import com.app.altex.altexsafe.customelements.NewsRecyclerGrid;
 import com.app.altex.altexsafe.thirdpatryactivity.NewsView;
 import com.bluehomestudio.progresswindow.ProgressWindow;
 import com.bluehomestudio.progresswindow.ProgressWindowConfiguration;
@@ -31,7 +34,7 @@ import java.util.ArrayList;
  */
 public class News extends Fragment {
 
-    GridView gv;
+    RecyclerView rv;
     private ProgressWindow progressWindow;
     private ArrayList<ImageGridItem> currentNewsSet = new ArrayList<>();
 
@@ -45,11 +48,11 @@ public class News extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View result = inflater.inflate(R.layout.fragment_news, container, false);
+        final View result = inflater.inflate(R.layout.fragment_news, container, false);
         progressConfigurations();
         progressWindow.showProgress();
         String urlString = "http://www.androidcentral.com/feed";
-        gv = (GridView) result.findViewById(R.id.grid);
+        rv = (RecyclerView) result.findViewById(R.id.grid_recycler);
         Parser parser = new Parser();
         parser.execute(urlString);
         parser.onFinish(new Parser.OnTaskCompleted() {
@@ -64,7 +67,9 @@ public class News extends Fragment {
                     news_items.add(new ImageGridItem(a.getTitle(), a.getContent(), a.getImage()));
                 }
                 currentNewsSet = (ArrayList<ImageGridItem>)news_items.clone();
-                gv.setAdapter(new GridAdapter(getContext(), news_items));
+                rv = (RecyclerView)result.findViewById(R.id.grid_recycler);
+                rv.setLayoutManager(new GridLayoutManager( getContext(), 3));
+                UpdateDataSet();
                 progressWindow.hideProgress();
             }
 
@@ -72,16 +77,6 @@ public class News extends Fragment {
             public void onError() {
                 //what to do in case of error
                 progressWindow.hideProgress();
-            }
-        });
-
-        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-               Intent intent = new Intent(getContext(), NewsView.class);
-                intent.putExtra("item", currentNewsSet.get(i));
-                startActivity(intent);
-
             }
         });
 
@@ -104,12 +99,24 @@ public class News extends Fragment {
                     }
                 }
 
-                ListAdapter adapter = new GridAdapter(getContext(), currentNewsSet);
-                gv.setAdapter(adapter);
+                UpdateDataSet();
             }
         });
 
         return result;
+    }
+
+    private void UpdateDataSet() {
+        NewsRecyclerGrid adapter = new NewsRecyclerGrid(getContext(), currentNewsSet.toArray(new ImageGridItem[0]));
+        adapter.setClickListener(new NewsRecyclerGrid.ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(getContext(), NewsView.class);
+                intent.putExtra("item", currentNewsSet.get(position));
+                startActivity(intent);
+            }
+        });
+        rv.setAdapter(adapter);
     }
 
 

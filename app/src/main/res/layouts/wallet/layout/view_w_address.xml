@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="70dp"
@@ -69,12 +70,11 @@
                         android:textStyle="bold" /> <!--android:textColor="@color/colorPrimaryDark" -->
 
                     <ImageView
+                        android:id="@+id/type"
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:layout_marginLeft="5dp"
-                        android:layout_marginTop="2dp"
-                        android:id="@+id/type"
-                        android:src="@drawable/ic_import_contacts_black_48dp" />
+                        android:layout_marginTop="2dp" />
                 </LinearLayout>
 
                 <TextView
